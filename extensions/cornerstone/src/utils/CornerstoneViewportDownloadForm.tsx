@@ -215,16 +215,41 @@ const CornerstoneViewportDownloadForm = ({
   };
 
   const downloadBlob = (filename, fileType) => {
-    const file = `${filename}.${fileType}`;
     const divForDownloadViewport = document.querySelector(
       `div[data-viewport-uid="${VIEWPORT_ID}"]`
     );
 
     html2canvas(divForDownloadViewport).then(canvas => {
-      const link = document.createElement('a');
-      link.download = file;
-      link.href = canvas.toDataURL(fileType, 1.0);
-      link.click();
+      canvas.toBlob(blob => {
+        const formData = new FormData();
+        formData.append('file', blob, `${filename}.${fileType}`);
+        formData.append('api_key', '568455965456598'); // Replace with your actual Cloudinary API key
+        formData.append('upload_preset', 'imman_test'); // Replace with your actual upload preset name
+
+        fetch('https://api.cloudinary.com/v1_1/div4ag4np/image/upload', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(response => {
+            if (!response.ok) {
+              return response.text().then(text => {
+                throw new Error(`HTTP error! status: ${response.status}, message: ${text}`);
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.secure_url) {
+              console.log('Image uploaded successfully:', data.secure_url);
+              // You can do something with the uploaded image URL here
+            } else {
+              console.error('Image upload failed:', data);
+            }
+          })
+          .catch(error => {
+            console.error('Error uploading image:', error);
+          });
+      }, `image/${fileType}`);
     });
   };
 

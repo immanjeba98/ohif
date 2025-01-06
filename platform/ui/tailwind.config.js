@@ -29,7 +29,7 @@ module.exports = {
       },
 
       primary: {
-        light: '#0742a6',
+        light: '#6e6e6e',
         main: '#0944b3',
         dark: '#181818',
         active: '#fff',
@@ -49,7 +49,7 @@ module.exports = {
       },
 
       indigo: {
-        dark: '#0b1a42',
+        dark: '#4b4b4b',
       },
 
       common: {
@@ -182,7 +182,7 @@ module.exports = {
         700: '#4c51bf',
         800: '#434190',
         900: '#3c366b',
-        dark: '#0b1a42',
+        dark: '#4b4b4b',
       },
       purple: {
         100: '#faf5ff',

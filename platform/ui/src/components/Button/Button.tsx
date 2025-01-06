@@ -66,7 +66,7 @@ const Button = ({
   endIcon: endIconProp,
   name,
   className,
-  onClick = () => {},
+  onClick = (e: any) => {},
   dataCY,
   startIconTooltip = null,
   endIconTooltip = null,
