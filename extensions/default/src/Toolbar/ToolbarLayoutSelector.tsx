@@ -126,7 +126,7 @@ function ToolbarLayoutSelectorWithServices({
 function LayoutSelector({
   rows = 3,
   columns = 4,
-  onLayoutChange = () => {},
+  onLayoutChange = () => { },
   className,
   onSelection,
   onSelectionPreset,

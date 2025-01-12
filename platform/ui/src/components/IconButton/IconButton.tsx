@@ -90,6 +90,8 @@ const IconButton = ({
 
   const handleOnClick = e => {
     buttonElement.current.blur();
+    console.log(e);
+    
     onClick(e);
   };
 

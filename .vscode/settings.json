@@ -110,5 +110,8 @@
     "wadors",
     "wadouri",
     "workerpool"
-  ]
+  ],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

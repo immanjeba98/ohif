@@ -226,7 +226,7 @@ const CornerstoneViewportDownloadForm = ({
         formData.append('api_key', '568455965456598'); // Replace with your actual Cloudinary API key
         formData.append('upload_preset', 'imman_test'); // Replace with your actual upload preset name
 
-        fetch('https://api.cloudinary.com/v1_1/div4ag4np/image/upload', {
+        fetch(`${window.config.cloudinary.uploadApiUrl}`, {
           method: 'POST',
           body: formData,
         })

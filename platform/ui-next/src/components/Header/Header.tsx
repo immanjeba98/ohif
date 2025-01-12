@@ -11,6 +11,7 @@ import {
 } from '../';
 
 import NavBar from '../NavBar';
+import UseWindowSize from '../../../../ui/src/components/WindowSize/UseWindowSize';
 
 // Todo: we should move this component to composition and remove props base
 
@@ -43,7 +44,8 @@ function Header({
   ...props
 }: HeaderProps): ReactNode {
   const { t } = useTranslation('Header');
-
+  const { width } = UseWindowSize();
+  const isMobile = width !== undefined && width < 768;
   const onClickReturn = () => {
     if (isReturnEnabled && onClickReturnButton) {
       onClickReturnButton();
@@ -52,69 +54,69 @@ function Header({
 
   return (
     <NavBar
-      isSticky={isSticky}
-      {...props}
-    >
-      <div className="relative h-[48px] items-center">
-        <div className="absolute left-0 top-1/2 flex -translate-y-1/2 items-center">
-          <div
-            className={classNames(
-              'mr-3 inline-flex items-center',
-              isReturnEnabled && 'cursor-pointer'
-            )}
-            onClick={onClickReturn}
-            data-cy="return-to-work-list"
-          >
-            {isReturnEnabled && <Icons.ChevronPatient className="text-primary-active w-8" />}
-            <div className="ml-1">
-              {WhiteLabeling?.createLogoComponentFn?.(React, props) || <Icons.OHIFLogo />}
-            </div>
-          </div>
-        </div>
-        <div className="absolute top-1/2 left-[250px] h-8 -translate-y-1/2">{Secondary}</div>
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-          <div className="flex items-center justify-center space-x-2">{children}</div>
-        </div>
-        <div className="absolute right-0 top-1/2 flex -translate-y-1/2 select-none items-center">
-          {PatientInfo}
-          <div className="border-primary-dark mx-1.5 h-[25px] border-r"></div>
-          <div className="flex-shrink-0">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-primary-active hover:bg-primary-dark mt-2 h-full w-full"
-                >
-                  <Icons.GearSettings />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {menuOptions.map((option, index) => {
-                  const IconComponent = option.icon
-                    ? Icons[option.icon as keyof typeof Icons]
-                    : null;
-                  return (
-                    <DropdownMenuItem
-                      key={index}
-                      onSelect={option.onClick}
-                      className="flex items-center gap-2 py-2"
-                    >
-                      {IconComponent && (
-                        <span className="flex h-4 w-4 items-center justify-center">
-                          <IconComponent className="h-full w-full" />
-                        </span>
-                      )}
-                      <span className="flex-1">{option.title}</span>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+  isSticky={isSticky}
+  {...props}
+>
+  <div className={`relative h-[${!isMobile? "48px" : "74px" }] items-center flex flex-wrap justify-between`}>
+    <div className="flex items-center">
+      <div
+        className={classNames(
+          'mr-3 inline-flex items-center',
+          isReturnEnabled && 'cursor-pointer'
+        )}
+        onClick={onClickReturn}
+        data-cy="return-to-work-list"
+      >
+        {isReturnEnabled && <Icons.ChevronPatient className="text-primary-active w-8" />}
+        <div className="ml-1">
+          {WhiteLabeling?.createLogoComponentFn?.(React, props) || <Icons.OHIFLogo />}
         </div>
       </div>
-    </NavBar>
+      <div className="hidden md:block">{Secondary}</div>
+    </div>
+    <div className="flex items-center justify-center space-x-2 flex-grow">
+      {children}
+    </div>
+    <div className="flex items-center">
+      {PatientInfo}
+      <div className="border-primary-dark mx-1.5 h-[25px] border-r hidden md:block"></div>
+      <div className="flex-shrink-0">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-primary-active hover:bg-primary-dark mt-2 h-full w-full"
+            >
+              <Icons.GearSettings />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {menuOptions.map((option, index) => {
+              const IconComponent = option.icon
+                ? Icons[option.icon as keyof typeof Icons]
+                : null;
+              return (
+                <DropdownMenuItem
+                  key={index}
+                  onSelect={option.onClick}
+                  className="flex items-center gap-2 py-2"
+                >
+                  {IconComponent && (
+                    <span className="flex h-4 w-4 items-center justify-center">
+                      <IconComponent className="h-full w-full" />
+                    </span>
+                  )}
+                  <span className="flex-1">{option.title}</span>
+                </DropdownMenuItem>
+              );
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  </div>
+</NavBar>
   );
 }
 

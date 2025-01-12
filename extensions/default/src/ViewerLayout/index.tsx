@@ -21,7 +21,7 @@ function ViewerLayout({
   rightPanelClosed = false,
 }: withAppTypes): React.FunctionComponent {
   const [appConfig] = useAppConfig();
-
+  leftPanelClosed =  window.innerWidth < 1000 ? true : false;
   const { panelService, hangingProtocolService } = servicesManager.services;
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(appConfig.showLoadingIndicator);
 

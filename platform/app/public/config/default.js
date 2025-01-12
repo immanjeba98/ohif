@@ -23,6 +23,10 @@ window.config = {
     // above, the number of requests can be go a lot higher.
     prefetch: 25,
   },
+  cloudinary: {
+    uploadApiUrl: 'https://api.cloudinary.com/v1_1/div4ag4np/image/upload',
+    // cloudName: process.env.CLOUDINARY_CLOUD_NAME || 'your_default_cloud_name',
+  },
   // filterQueryParam: false,
   defaultDataSourceName: 'dicomweb',
   /* Dynamic config allows user to pass "configUrl" query string this allows to load config without recompiling application. The regex will ensure valid configuration source */

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from '../Icon';
 import Tooltip from '../Tooltip';
 import ListMenu from '../ListMenu';
+import UseWindowSize from '../WindowSize/UseWindowSize';
 
 const baseClasses = {
   Button: 'flex items-center rounded-md border-transparent group/button',
@@ -110,6 +111,8 @@ const SplitButton = ({
     }),
     primary.className
   );
+  const { width } = UseWindowSize();
+  const isMobile = width !== undefined && width < 768;
   return (
     <OutsideClickHandler
       onOutsideClick={collapse}
@@ -137,23 +140,27 @@ const SplitButton = ({
                 data-cy={`${groupId}-split-button-primary`}
               />
             </div>
-            <div className={classes.Separator({ ...state, primary })}></div>
-            <div
-              className={classes.Secondary({ ...state, primary })}
-              onClick={toggleExpanded}
-              data-cy={`${groupId}-split-button-secondary`}
-            >
-              <Tooltip
-                isDisabled={state.isExpanded || !secondary.tooltip}
-                content={secondary.tooltip}
-                className="h-full"
-              >
-                <Icon
-                  name={secondary.icon}
-                  className={classes.SecondaryIcon({ ...state })}
-                />
-              </Tooltip>
-            </div>
+            {!isMobile && (
+              <>
+                <div className={classes.Separator({ ...state, primary })}></div>
+                <div
+                  className={classes.Secondary({ ...state, primary })}
+                  onClick={toggleExpanded}
+                  data-cy={`${groupId}-split-button-secondary`}
+                >
+                  <Tooltip
+                    isDisabled={state.isExpanded || !secondary.tooltip}
+                    content={secondary.tooltip}
+                    className="h-full"
+                  >
+                    <Icon
+                      name={secondary.icon}
+                      className={classes.SecondaryIcon({ ...state })}
+                    />
+                  </Tooltip>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div

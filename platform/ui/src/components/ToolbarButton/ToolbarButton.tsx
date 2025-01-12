@@ -20,11 +20,13 @@ const ToolbarButton = ({
   size,
   toolTipClassName,
   disableToolTip = false,
+  isActive = false,
   ...rest
   //
 }) => {
   const shouldShowDropdown = !!dropdownContent;
   const iconEl = icon ? <Icon name={icon} /> : <div>{label || 'Missing icon and label'}</div>;
+console.log(commands);
 
   const sizeToUse = size ?? 'toolbar';
   const toolTipClassNameToUse =
@@ -46,7 +48,10 @@ const ToolbarButton = ({
       >
         <IconButton
           size={sizeToUse}
-          className={classNames(className, disabled ? 'ohif-disabled' : '')}
+          className={classNames(className, {
+            'ohif-disabled': disabled,
+            'ohif-active': isActive, // Apply active class
+          })}
           onClick={() => {
             onInteraction({
               itemId: id,

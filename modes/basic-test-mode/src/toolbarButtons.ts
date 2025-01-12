@@ -192,6 +192,13 @@ const toolbarButtons: Button[] = [
             protocolId: 'mpr',
           },
         },
+        {
+          commandName: 'setToolActiveToolbar',
+          commandOptions: {
+            toolName: 'Crosshairs',
+            toolGroupIds: ['mpr'],
+          },
+        },
       ],
       evaluate: 'evaluate.mpr',
     },
